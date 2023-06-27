@@ -1,6 +1,39 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>BlazeSort</PageTitle>
+<div class="main-page-variants">
+    <MudSelect T="string" Label="Choose your spliter" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+        <MudSelectItem T="string" Value="@(Spliter=";")" />
+        <MudSelectItem T="string" Value="@(Spliter=",")" />
+    </MudSelect>
+    <div style="min-width: 70%"></div>
+    <MudSelect T="string" Label="Choose sort method" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+        <MudSelectItem T="string" Value="@(SortMethod="Bubble sort")" />
+        <MudSelectItem T="string" Value="@(SortMethod="Insertion sort")" />
+        <MudSelectItem T="string" Value="@(SortMethod="Quick sort")" />
+    </MudSelect>
+</div>
 
-<h1>Hello, world!</h1>
+<MudTextField @bind-Value="NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined"></MudTextField>
+
+<div class="sort-button">
+    <MudButton Variant="Variant.Filled" Style="width: 180px; height: 60px;" Color="Color.Dark">Sort</MudButton>
+</div>
+
+<div class="sorted-numbers">
+    <MudTextField @bind-Value="SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined" />
+</div>
+
+
+
+
+@code {
+    public string NumbersToSort { get; set; }
+
+    public string Spliter { get; set; }
+
+    public string SortMethod { get; set; }
+    
+    public string SortedNumbers { get; set; }
+}
 
