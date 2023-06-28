@@ -28,9 +28,10 @@ namespace BlazeSortWebApp
             _dialogService.Show<DialogError>("Syntax error", options);
         }
 
-        private void OpenSortedSuccessfullyDialog(DialogOptions options)
+        private void OpenSortedSuccessfullyDialog()
         {
-            _dialogService.Show<DialogSortedSuccessfully>("Sorting time", options);
+            var parameters = new DialogParameters { { "Time", TimeSorted } };
+            _dialogService.Show<DialogSortedSuccessfully>("Sorting time",parameters);
         }
 
 
@@ -45,9 +46,8 @@ namespace BlazeSortWebApp
                     Stopwatch stopWatch = Stopwatch.StartNew();
                     var sortedList = BubbleSort.Sort(ints);
                     stopWatch.Stop();
-                    TimeSpan time = stopWatch.Elapsed;
-                    time = TimeSorted;
-                    OpenSortedSuccessfullyDialog(DialogOptions);
+                    TimeSorted = stopWatch.Elapsed;
+                    OpenSortedSuccessfullyDialog();
                     string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
 
                     SortedNumbers = string.Join(Spliter, sortedListToString);

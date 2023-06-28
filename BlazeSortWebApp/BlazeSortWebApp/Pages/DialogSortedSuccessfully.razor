@@ -1,8 +1,6 @@
-﻿@inject IndexViewModel model 
-
-<MudDialog>
+﻿<MudDialog>
     <DialogContent>
-       @model.TimeSorted;
+        @Time
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -13,6 +11,7 @@
 
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public TimeSpan Time { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
