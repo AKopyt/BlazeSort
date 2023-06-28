@@ -7,21 +7,21 @@
         <MudSelectItem T="string" Value="@(Spliter=",")" />
     </MudSelect>
     <div style="min-width: 70%"></div>
-    <MudSelect T="string" Label="Choose sort method" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
-        <MudSelectItem T="string" Value="@(SortMethod="Bubble sort")" />
-        <MudSelectItem T="string" Value="@(SortMethod="Insertion sort")" />
-        <MudSelectItem T="string" Value="@(SortMethod="Quick sort")" />
+    <MudSelect T="string" @bind-Value="SortMethod" Label="Choose sort method" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
+        <MudSelectItem T="string" Value=@("Bubble sort")/>
+        <MudSelectItem T="string" Value=@("Insertion sort") />
+        <MudSelectItem T="string" Value=@("Quick sort") />
     </MudSelect>
 </div>
 
 <MudTextField @bind-Value="NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined"></MudTextField>
 
 <div class="sort-button">
-    <MudButton Variant="Variant.Filled" Style="width: 180px; height: 60px;" Color="Color.Dark">Sort</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="@Sort" Style="width: 180px; height: 60px;" Color="Color.Dark">Sort</MudButton >
 </div>
 
 <div class="sorted-numbers">
-    <MudTextField @bind-Value="SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined" />
+    <MudTextField @bind-Value="SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined"/>
 </div>
 
 
@@ -35,5 +35,30 @@
     public string SortMethod { get; set; }
     
     public string SortedNumbers { get; set; }
+
+    public async Task Sort()
+    {
+        try
+        {
+            var splittedString = NumbersToSort.Split(Spliter);
+            var ints = Array.ConvertAll(splittedString, s => int.Parse(s)).ToList();
+            if (SortMethod == "Bubble sort")
+            {
+                var sortedList = BubbleSort.Sort(ints);
+                string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
+
+                SortedNumbers = string.Join(Spliter, sortedListToString);
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("error");
+
+        }
+
+     
+    }
 }
 
