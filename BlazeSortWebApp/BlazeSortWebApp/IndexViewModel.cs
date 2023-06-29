@@ -15,6 +15,7 @@ namespace BlazeSortWebApp
         public string NumbersToSort { get; set; }
 
         public string Spliter { get; set; }
+        
         public TimeSpan TimeSorted { get; set; }
 
         public SortAlgorithmType SortMethod { get; set; }
@@ -53,6 +54,18 @@ namespace BlazeSortWebApp
                     SortedNumbers = string.Join(Spliter, sortedListToString);
 
                 }
+                if (SortMethod == SortAlgorithmType.InsertionSort)
+                {
+                    Stopwatch stopWatch = Stopwatch.StartNew();
+                    var sortedList = InsertionSort.Sort(ints);
+                    stopWatch.Stop();
+                    TimeSorted = stopWatch.Elapsed;
+                    OpenSortedSuccessfullyDialog();
+                    string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
+
+                    SortedNumbers = string.Join(Spliter, sortedListToString);
+
+                }
 
             }
             catch (Exception e)
@@ -63,7 +76,7 @@ namespace BlazeSortWebApp
 
 
         }
-
+        
 
     }
 }
