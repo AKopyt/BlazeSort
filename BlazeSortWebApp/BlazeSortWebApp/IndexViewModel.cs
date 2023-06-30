@@ -42,41 +42,33 @@ namespace BlazeSortWebApp
             {
                 var splittedString = NumbersToSort.Split(Spliter);
                 var ints = Array.ConvertAll(splittedString, s => int.Parse(s)).ToList();
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                List<int> sortedList = new List<int>();
+                
                 if (SortMethod == SortAlgorithmType.BubbleSort)
                 {
-                    Stopwatch stopWatch = Stopwatch.StartNew();
-                    var sortedList = BubbleSort.Sort(ints);
-                    stopWatch.Stop();
-                    TimeSorted = stopWatch.Elapsed;
-                    OpenSortedSuccessfullyDialog();
-                    string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
-
-                    SortedNumbers = string.Join(Spliter, sortedListToString);
-
+                    sortedList = BubbleSort.Sort(ints);
                 }
                 if (SortMethod == SortAlgorithmType.InsertionSort)
                 {
-                    Stopwatch stopWatch = Stopwatch.StartNew();
-                    var sortedList = InsertionSort.Sort(ints);
-                    stopWatch.Stop();
-                    TimeSorted = stopWatch.Elapsed;
-                    OpenSortedSuccessfullyDialog();
-                    string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
-
-                    SortedNumbers = string.Join(Spliter, sortedListToString);
-
+                    sortedList = InsertionSort.Sort(ints);
                 }
-
+                if (SortMethod == SortAlgorithmType.QuickSort)
+                {
+                    sortedList = QuickSort.Sort(ints,0, ints.Count-1);
+                }
+                
+                stopWatch.Stop();
+                TimeSorted = stopWatch.Elapsed;
+                OpenSortedSuccessfullyDialog();
+                string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
+                SortedNumbers = string.Join(Spliter, sortedListToString);
             }
             catch (Exception e)
             {
                 OpenErrorDialog(DialogOptions);
 
             }
-
-
         }
-        
-
     }
 }
