@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject IndexViewModel model
+@inject IJSRuntime JS
 
 
 <PageTitle>BlazeSort</PageTitle>
@@ -32,16 +33,22 @@
     </MudSelect>
 </div>
 
-<MudTextField @bind-Value="model.NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined"></MudTextField>
+<MudTextField @bind-Value="model.NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(()=>CopyToClipBoard(model.NumbersToSort))"></MudTextField>
 
 <div class="sort-button">
     <MudButton Variant="Variant.Filled" OnClick="@model.Sort" Style="width: 180px; height: 60px;" Color="Color.Dark">Sort</MudButton >
 </div>
 
 <div class="sorted-numbers">
-    <MudTextField @bind-Value="model.SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined"/>
+    <MudTextField @bind-Value="model.SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(()=>CopyToClipBoard(model.SortedNumbers))" />
 </div>
 
+@code
+{
+    public async Task CopyToClipBoard(string textToCopy)
+    {
+        await JS.InvokeAsync<string>("CopyToClipBoard", textToCopy);
 
+    }
 
-
+}

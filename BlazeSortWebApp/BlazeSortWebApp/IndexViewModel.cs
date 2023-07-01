@@ -6,7 +6,7 @@ using MudBlazor;
 
 namespace BlazeSortWebApp
 {
-    public class IndexViewModel
+    public class IndexViewModel : IViewModel
     {
         IDialogService _dialogService;
         public IndexViewModel(IDialogService dialog)
