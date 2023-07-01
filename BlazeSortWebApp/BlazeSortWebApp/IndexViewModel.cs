@@ -25,8 +25,6 @@ namespace BlazeSortWebApp
         public string SortedNumbers { get; set; }
 
         public int ListSize { get; set; }
-     
-        public string CreatedList { get; set; }
 
         DialogOptions DialogOptions = new DialogOptions() { CloseButton = true };
 
@@ -77,46 +75,7 @@ namespace BlazeSortWebApp
             }
         }
 
-        public List<int> CreateIncreasingList()
-        {
-            List<int> createdList = new List<int>();
-            for (int i = 1; i <= ListSize; i++)
-            {
-                createdList.Add(i);
-            }
-            return createdList;
-        }
-        public List<int> CreateDescendingList()
-        {
-            List<int> createdList = new List<int>();
-            for (int i = ListSize; i >= 1; i--)
-            {
-                createdList.Add(i);
-
-            }
-            return createdList;
-        }
-
-        public List<int> CreateConstantList()
-        {
-            List<int> createdList = new List<int>();
-            for (int i = 1; i <= ListSize; i++)
-            {
-                createdList.Add(1);
-            }
-            return createdList;
-        }
-
-        public List<int> CreateRandomList()
-        {
-            List<int> createdList = new List<int>();
-            Random rnd = new Random();
-            for (int i = 1; i <= ListSize; i++)
-            {
-                createdList.Add(rnd.Next());    
-            }
-            return createdList;
-        }
+       
 
         public async Task CreateList()
         {
@@ -125,30 +84,30 @@ namespace BlazeSortWebApp
             switch(TypeOfList)
             {
                 case TypeOfList.IncreasingList:
-                    createdList = CreateIncreasingList();
+                    createdList = GenerateList.CreateIncreasingList(ListSize);
                     break;
                 case TypeOfList.DescendingList:
-                    createdList = CreateDescendingList();
+                    createdList = GenerateList.CreateDescendingList(ListSize);
                     break;
                 case TypeOfList.ConstantList:
-                    createdList = CreateConstantList();
+                    createdList = GenerateList.CreateConstantList(ListSize);
                     break;
                 case TypeOfList.RandomList:
-                    createdList = CreateRandomList();
+                    createdList = GenerateList.CreateRandomList(ListSize);
                     break;
 
             }
-            
-            for(int i=0; i<createdList.Count; i++)
+
+            NumbersToSort = "";
+
+            for (int i=0; i<createdList.Count; i++)
             {
                 if (i == createdList.Count - 1)
-                    CreatedList += createdList[i].ToString();
+                    NumbersToSort += createdList[i].ToString();
                 else
-                    CreatedList += createdList[i].ToString() + Spliter;
+                    NumbersToSort += createdList[i].ToString() + Spliter;
 
             }
-
-            NumbersToSort = CreatedList;
 
         }
 
