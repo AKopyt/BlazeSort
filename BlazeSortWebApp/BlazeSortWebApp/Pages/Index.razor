@@ -7,14 +7,32 @@
 <div class="main-page-variants">
     
     <MudTextField @bind-Value="model.Spliter" Label="Enter the spliter" Variant="Variant.Outlined"></MudTextField>
+    <MudExpansionPanels Style="padding: 8px" >
+        <MudExpansionPanel Text="Generate your own list" MaxHeight="200" >
+            <div class="create-list">
+                <MudNumericField @bind-Value="model.ListSize" Label="Enter list size" Variant="Variant.Filled" Style="width: 200px; height: 50px; padding-top: 8px" />
 
-    <div style="min-width: 70%"></div>
+                <MudSelect T="TypeOfList" @bind-Value="model.TypeOfList" Label="Select a type of list" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" Style="padding-top: 8px; padding-bottom: 8px">
+                    <MudSelectItem T="TypeOfList" Value=@(TypeOfList.IncreasingList) />
+                    <MudSelectItem T="TypeOfList" Value=@(TypeOfList.DescendingList) />
+                    <MudSelectItem T="TypeOfList" Value=@(TypeOfList.ConstantList) />
+                    <MudSelectItem T="TypeOfList" Value=@(TypeOfList.RandomList) />
+                </MudSelect>
+
+                <MudButton Variant="Variant.Filled" OnClick="@model.CreateList" Style="width: 140px; height: 40px; padding-top: 8px" Color="Color.Dark">Create a list</MudButton>
+
+            </div>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+    <div style="min-width: 50%"></div>
     <MudSelect T="SortAlgorithmType" @bind-Value="model.SortMethod" Label="Choose sort method" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
         <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.BubbleSort)/>
         <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.InsertionSort)/>
         <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.QuickSort)/>
     </MudSelect>
 </div>
+
+
 
 <MudTextField @bind-Value="model.NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined"></MudTextField>
 
@@ -26,3 +44,7 @@
 <div class="sorted-numbers">
     <MudTextField @bind-Value="model.SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined"/>
 </div>
+
+
+
+
