@@ -9,20 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         # uses GitHub's checkout action to checkout code form the master branch
-    - uses: actions/checkout@v3
-      # sets up .NET SDK 7.0.0
+    - uses: actions/checkout@v2
+      # sets up .NET Core SDK 3.1
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v2.0.0
             # publishes Blazor project to the release-folder
     - name: Publish .NET Core Project
       run: dotnet publish BlazeSortWebApp/BlazeSortWebApp/BlazeSortWebApp.csproj -c Release -o release --nologo
-        # changes the base-tag in index.html from '/' to 'BlazeSortWebApp' to match GitHub Pages repository subdirectory
-    # changes the base-tag in index.html from '/' to 'BlazeSort' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to BlazeSort
-      run: sed -i 's/<base href="\/" \/>/<base href="\/BlazeSort\/" \/>/g' release/wwwroot/index.html
-     # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
-    - name: Add .nojekyll file
-      run: touch release/wwwroot/.nojekyll
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
