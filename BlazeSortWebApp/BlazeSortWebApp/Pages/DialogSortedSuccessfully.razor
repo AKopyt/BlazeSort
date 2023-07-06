@@ -1,6 +1,8 @@
-﻿<MudDialog>
+﻿@using System.Text
+@using System.Runtime.InteropServices.ComTypes
+<MudDialog>
     <DialogContent>
-        @Time
+        @_formattedTime
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -17,4 +19,19 @@
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
+    private string _formattedTime;
+
+    protected override void OnParametersSet()
+    {
+        _formattedTime = FormatTime();
+        base.OnParametersSet();
+    }
+
+
+    public string FormatTime()
+    {
+        string formattedTime = " "+Time.Hours.ToString() + "h : " + Time.Minutes.ToString()
+                               + "min : " + Time.Seconds.ToString() + "s : " + Time.Milliseconds.ToString() + "ms";
+        return formattedTime;
+    }
 }

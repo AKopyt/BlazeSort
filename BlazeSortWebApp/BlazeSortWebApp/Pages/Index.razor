@@ -6,10 +6,10 @@
 
 <PageTitle>BlazeSort</PageTitle>
 <div class="main-page-variants">
-    
+
     <MudTextField @bind-Value="model.Spliter" Label="Enter the spliter" Variant="Variant.Outlined"></MudTextField>
-    <MudExpansionPanels Style="padding: 8px" >
-        <MudExpansionPanel Text="Generate your own list" MaxHeight="200" >
+    <MudExpansionPanels Style="padding: 8px">
+        <MudExpansionPanel Text="Generate your own list" MaxHeight="200">
             <div class="create-list">
                 <MudNumericField @bind-Value="model.ListSize" Label="Enter list size" Variant="Variant.Filled" Style="width: 200px; height: 50px; padding-top: 8px" />
 
@@ -27,24 +27,42 @@
     </MudExpansionPanels>
     <div style="min-width: 50%"></div>
     <MudSelect T="SortAlgorithmType" @bind-Value="model.SortMethod" Label="Choose sort method" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter">
-        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.BubbleSort)/>
-        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.InsertionSort)/>
-        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.QuickSort)/>
+        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.BubbleSort) />
+        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.InsertionSort) />
+        <MudSelectItem T="SortAlgorithmType" Value=@(SortAlgorithmType.QuickSort) />
     </MudSelect>
 </div>
 
 <MudTextField @bind-Value="model.NumbersToSort" Label="Numbers to sort" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(()=>CopyToClipBoard(model.NumbersToSort))"></MudTextField>
 
 <div class="sort-button">
-    <MudButton Variant="Variant.Filled" OnClick="@model.Sort" Style="width: 180px; height: 60px;" Color="Color.Dark">Sort</MudButton >
+    <MudButton Variant="Variant.Filled" OnClick="@model.Sort" Style="width: 180px; height: 60px;margin-top: 40px;margin-bottom: 40px" Color="Color.Dark">Sort</MudButton>
 </div>
 
-<div class="sorted-numbers">
+<div class="sorted-numbers" Style = "margin-bottom: 50px">
     <MudTextField @bind-Value="model.SortedNumbers" Label="Sorted numbers" ReadOnly="true" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.ContentCopy" OnAdornmentClick="@(()=>CopyToClipBoard(model.SortedNumbers))" />
 </div>
 
+<MudTable Items="@model.SortRecordsView.ListOfSortRecord" Hover="true" >
+    <HeaderContent>
+        <MudTh>Nr</MudTh>
+        <MudTh>Sort Algorithm Type</MudTh>
+        <MudTh>Size List</MudTh>
+        <MudTh>Time</MudTh>
+        <MudTh>Type of list</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Number</MudTd>
+        <MudTd DataLabel="Sort Algorithm Type">@context.SortAlgorithmType</MudTd>
+        <MudTd DataLabel="Size List">@context.SizeList</MudTd>
+        <MudTd DataLabel="Time">@context.Time</MudTd>
+        <MudTd DataLabel="Type of list">@context.TypeOfList</MudTd>
+    </RowTemplate>
+</MudTable>
+
 @code
 {
+
     public async Task CopyToClipBoard(string textToCopy)
     {
         await JS.InvokeAsync<string>("CopyToClipBoard", textToCopy);

@@ -6,12 +6,14 @@ using MudBlazor;
 
 namespace BlazeSortWebApp
 {
-    public class IndexViewModel : IViewModel
+    public class IndexViewModel 
     {
         IDialogService _dialogService;
-        public IndexViewModel(IDialogService dialog)
+        public SortRecordsView SortRecordsView { get; set; }
+        public IndexViewModel(IDialogService dialog, SortRecordsView sortRecordsView)
         {
             _dialogService = dialog;
+            SortRecordsView = sortRecordsView;
         }
         public string NumbersToSort { get; set; }
 
@@ -67,6 +69,16 @@ namespace BlazeSortWebApp
                 OpenSortedSuccessfullyDialog();
                 string[] sortedListToString = sortedList.Select(i => i.ToString()).ToArray();
                 SortedNumbers = string.Join(Spliter, sortedListToString);
+
+                SortRecord record = new SortRecord();
+                record.Time= TimeSorted;
+                record.SizeList = ListSize;
+                record.SortAlgorithmType = SortMethod;
+                record.TypeOfList = TypeOfList;
+                record.Number = SortRecordsView.ListOfSortRecord.Count + 1;
+                SortRecordsView.AddToList(record);
+
+
             }
             catch (Exception e)
             {
